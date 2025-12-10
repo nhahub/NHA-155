@@ -1,0 +1,28 @@
+# Real-Time Detection Configuration
+
+# Model settings
+model:
+  path: D:\Digitopia\Omar\Action Detection\models\karsl502_model_20251210_033148.pth # Path to your trained model
+
+# Action range settings
+actions:
+  start_index: 0    # Start action index (inclusive)
+  end_index: 118    # End action index (inclusive) - 11 classes: 100-110
+  include_null: true  # Include null class (no sign) as class 999
+
+# Detection settings
+detection:
+  threshold: 0.8              # Higher threshold with smoothing - prevents jitter
+  sequence_length: 30         # Number of frames per sequence
+  sentence_length: 5          # Max signs to show in sentence
+
+# Camera settings
+camera:
+  device_id: 0                      # Camera device ID
+  min_detection_confidence: 0.5     # MediaPipe detection confidence
+  min_tracking_confidence: 0.5      # MediaPipe tracking confidence
+
+# Dataset settings
+dataset:
+  karsl_root: "D:/KArSL-502"        # Path to KArSL-502 dataset
+  labels_file: "KARSL-502_Labels.xlsx"  # Excel labels filename

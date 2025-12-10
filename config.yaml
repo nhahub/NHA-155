@@ -1,0 +1,65 @@
+# ============================================================================
+# KArSL-502 Training Configuration
+# PyTorch LSTM Model for Sign Language Detection
+# Dataset: 502 action classes with ~75,000 video sequences
+# ============================================================================
+
+# Paths
+paths:
+  data_path: 'MP_Data_KArSL'
+  karsl_root: 'D:\KArSL-502'  # Path to original KArSL-502 dataset
+  model_save_path: 'models'
+  logs_path: 'logs_pytorch'
+
+# Preprocessed Data (RECOMMENDED for faster training!)
+# Set use_preprocessed: true and provide the filename after running preprocess_dataset.py
+use_preprocessed: True  # Change to true after preprocessing
+preprocessed_file: 'D:\Digitopia\Omar\Action Detection\preprocessed_data\sequences_actions0-119_seq30_with_null_20251210_023455.npz'
+
+# Model Architecture (Optimized for 502 classes with ~75K samples)
+model:
+  input_size: 1662          # Keypoint features (pose + face + hands)
+  hidden_size: 256          # LSTM hidden units (increased for larger dataset)
+  lstm_layers: 3            # Number of LSTM layers (deeper network)
+  dropout: 0.5              # Dropout rate for regularization
+  attention_heads: 8        # Number of attention heads
+
+# Training Parameters
+training:
+  batch_size: 264            # Batch size (larger for stability)
+  learning_rate: 0.0005     # Initial learning rate (lower for large dataset)
+  weight_decay: 0.0001      # L2 regularization strength
+  num_epochs: 300           # Maximum number of epochs
+  patience: 30              # Early stopping patience
+  grad_clip: 1.0            # Gradient clipping threshold
+  num_workers: 4            # Number of data loading workers
+  pin_memory: true          # Pin memory for faster GPU transfer
+
+# Learning Rate Scheduler
+scheduler:
+  factor: 0.5               # LR reduction factor
+  patience: 10              # Epochs to wait before reducing LR
+  min_lr: 1.0e-7            # Minimum learning rate
+
+# Data Parameters
+data:
+  sequence_length: 30       # Number of frames per video sequence
+  test_size: 0.15           # Proportion of data for testing (15%)
+  validation_split: 0.15    # Proportion of train data for validation (15%)
+  random_seed: 42           # Random seed for reproducibility
+
+# Optimization
+optimization:
+  optimizer: 'AdamW'        # Optimizer type (Adam, AdamW, SGD)
+  use_amp: false            # Use Automatic Mixed Precision (for faster training)
+  
+# Logging & Checkpointing
+logging:
+  log_interval: 10          # Print detailed logs every N epochs
+  save_best_only: true      # Save only the best model
+  plot_dpi: 300             # DPI for training plots
+
+# Device
+device:
+  use_cuda: true            # Use CUDA if available
+  device_id: 0              # GPU device ID (if multiple GPUs)

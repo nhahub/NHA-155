@@ -1,0 +1,29 @@
+# Preprocessing Configuration
+# Configure how to preprocess the dataset
+
+# Preprocessing mode
+mode:
+  type: 'new'                      # 'new' = create new file, 'append' = add to existing file
+  existing_file: 'preprocessed_data/sequences_actions0-119_seq30_with_null_20251210_023455.npz'  # Only used if mode = 'append'
+
+# Action range
+actions:
+  start_index: 0          # Start action index (0-501 for KArSL)
+  end_index: 119          # End action index (inclusive)
+
+# Null class configuration
+null_class:
+  enabled: false                   # Include null class (no sign) in dataset
+  folder_name: 'null_no_sign'      # Folder name for null class data
+  class_index: 999                 # Index to assign to null class (999 to avoid conflicts)
+
+# Sequence settings
+sequence:
+  length: 30                       # Number of frames per sequence
+
+# Output settings
+output:
+  directory: 'preprocessed_data'   # Directory to save preprocessed files
+  
+# Dataset paths (loaded from main config.yaml)
+# These will be read from config.yaml automatically
